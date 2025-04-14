@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Digitalt Kärleksbrev</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  overflow-x: hidden;
+  position: relative;
+}
+
+    .bg-pattern {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.3) 2px, transparent 2px);
+      background-size: 30px 30px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .container {
+      text-align: center;
+      position: relative;
+      width: 100%;
+      max-width: 550px;
+      padding: 30px;
+      z-index: 10;
+    }
+
+    h1 {
+  font-family: 'Playfair Display', serif;
+  color: #4db6ac;
+  margin-bottom: 40px;
+  font-size: 2.4rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  position: relative;
+  letter-spacing: 1px;
+}
+
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 3px;
+      background: linear-gradient(to right, rgba(77, 182, 172, 0.3), rgba(77, 182, 172, 0.8), rgba(77, 182, 172, 0.3));
+      border-radius: 3px;
+    }
+
+    .envelope-wrapper {
+      perspective: 1200px;
+      margin-bottom: 30px;
+      position: relative;
+      height: 240px;
+    }
+
+    .envelope {
+      width: 100%;
+      max-width: 340px;
+      height: 240px;
+      margin: 0 auto;
+      background: linear-gradient(145deg, #fcd5ce, #f8ad9d);
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-style: preserve-3d;
+    }
+
+    .envelope:hover {
+      transform: scale(1.05) translateY(-8px) rotateY(-5deg);
+      box-shadow: 0 25px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Decoration on envelope */
+    .envelope::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      border: 2px dashed rgba(255, 255, 255, 0.4);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background-color: #f8ad9d;
+      border-radius: 12px 12px 0 0;
+      transform-origin: bottom;
+      transform-style: preserve-3d;
+      transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.475);
+      z-index: 5;
+      overflow: hidden;
+    }
+
+    .envelope-flap::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #f8ad9d 0%, #fcd5ce 100%);
+      clip-path: polygon(0 100%, 50% 0, 100% 100%);
+      border-radius: 12px 12px 0 0;
+    }
+
+    .envelope-flap::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.1) 10px, transparent 10px, transparent 20px);
+      clip-path: polygon(0 100%, 50% 0, 100% 100%);
+      border-radius: 12px 12px 0 0;
+      opacity: 0.5;
+    }
+
+    .envelope-seal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(145deg, #ef6c77, #d94d6a);
+      border-radius: 50%;
+      z-index: 6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 24px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+      transition: all 0.5s;
+    }
+
+    .envelope-seal::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .envelope.open .envelope-flap {
+      transform: rotateX(180deg);
+      pointer-events: none;
+    }
+
+    .envelope.open .envelope-seal {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+      pointer-events: none;
+    }
+
+    /* Letter container and letter */
+    .letter-container {
+      position: absolute;
+      width: 100%;
+      max-width: 340px;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+      z-index: 1;
+      height: 0;
+      transition: height 0.8s ease;
+    }
+
+    .letter {
+      background: linear-gradient(to bottom, #fff 98%, #f8f8f8 100%);
+      background-image: repeating-linear-gradient(#f9f9f9 0px, #f9f9f9 24px, #eaeaea 25px);
+      border-radius: 8px;
+      padding: 30px;
+      width: 92%;
+      margin: 0 auto;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+      max-height: 100%;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+    }
+
+    .letter::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at top left, rgba(255,200,210,0.1) 20px, transparent 20px),
+        radial-gradient(circle at bottom right, rgba(255,200,210,0.1) 20px, transparent 20px);
+      pointer-events: none;
+    }
+
+    .envelope.open + .letter-container {
+      height: 75vh;
+    }
+
+    .envelope.open + .letter-container .letter {
+      transform: translateY(-70px);
+    }
+
+    .letter-content {
+      opacity: 0;
+      transition: opacity 0.8s 0.4s;
+    }
+
+    .letter-content.show {
+      opacity: 1;
+    }
+
+    .letter::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .letter::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    .letter::-webkit-scrollbar-thumb {
+      background: #f0a6b9;
+      border-radius: 10px;
+    }
+
+    .letter-line {
+      font-family: 'Dancing Script', cursive;
+      font-size: 24px;
+      line-height: 1.6;
+      margin: 20px 0;
+      color: #444;
+      text-align: left;
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 1s, transform 1s;
+      position: relative;
+    }
+
+    .letter-line.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .letter-line:last-child {
+      font-size: 20px;
+      font-style: italic;
+      color: #888;
+      margin-top: 30px;
+      margin-bottom: 20px;
+    }
+
+    .signature {
+      font-size: 26px;
+      margin-top: 40px;
+      text-align: right;
+      position: relative;
+    }
+
+    .signature::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      right: 0;
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(to right, transparent, rgba(240, 166, 185, 0.5));
+    }
+
+    .instructions {
+      margin-top: 20px;
+      color: #c13056;
+      font-weight: 500;
+      font-size: 1.1rem;
+      padding: 12px 20px;
+      background-color: rgba(255, 255, 255, 0.7);
+      border-radius: 30px;
+      display: inline-block;
+      animation: pulse 2s infinite;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(193, 48, 86, 0.4);
+      }
+      70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(193, 48, 86, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(193, 48, 86, 0);
+      }
+    }
+
+    .heart, .flower {
+      position: absolute;
+      font-size: 32px;
+      opacity: 0;
+      z-index: 20;
+      filter: drop-shadow(0 3px 5px rgba(0,0,0,0.15));
+    }
+
+    .heart {
+      color: #ff6b81;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .flower {
+      animation: bloom 3s forwards;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-180px) rotate(30deg); opacity: 0; }
+    }
+
+    @keyframes bloom {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: scale(1.2); opacity: 0; }
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: white;
+      box-shadow: 0 0 15px 3px rgba(255, 255, 255, 0.8);
+      animation: twinkle 4s infinite;
+      opacity: 0;
+      z-index: 0;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0; transform: scale(0.5); }
+      50% { opacity: 1; transform: scale(1.3); }
+      100% { opacity: 0; transform: scale(0.5); }
+    }
+
+    /* Decorative elements */
+    .corner-decoration {
+      position: absolute;
+      font-size: 40px;
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    .top-left {
+      top: 20px;
+      left: 20px;
+      transform: rotate(-20deg);
+    }
+
+    .top-right {
+      top: 20px;
+      right: 20px;
+      transform: rotate(20deg);
+    }
+
+    .bottom-left {
+      bottom: 20px;
+      left: 20px;
+      transform: rotate(20deg);
+    }
+
+    .bottom-right {
+      bottom: 20px;
+      right: 20px;
+      transform: rotate(-20deg);
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      .letter-line { font-size: 22px; }
+      .envelope, .envelope-wrapper { max-width: 300px; height: 220px; }
+      .envelope.open + .letter-container { height: 60vh; }
+      .envelope.open + .letter-container .letter { transform: translateY(-50px); }
+      .corner-decoration { font-size: 30px; }
+    }
+
+    @media (max-width: 400px) {
+      h1 { font-size: 1.8rem; }
+      .letter-line { font-size: 20px; }
+      .envelope, .envelope-wrapper { max-width: 260px; height: 200px; }
+      .envelope.open + .letter-container { height: 55vh; }
+      .envelope.open + .letter-container .letter { transform: translateY(-40px); }
+      .corner-decoration { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-pattern"></div>
+  
+  <div class="corner-decoration top-left">🌸</div>
+  <div class="corner-decoration top-right">💕</div>
+  <div class="corner-decoration bottom-left">💖</div>
+  <div class="corner-decoration bottom-right">🌹</div>
+  
+  <div class="container">
+    <h1>Ett brev till dig Adrieli❤️</h1>
+
+    <div class="envelope-wrapper">
+      <div class="envelope" id="envelope">
+        <div class="envelope-flap"></div>
+        <div class="envelope-seal">❤️</div>
+      </div>
+      <div class="letter-container">
+        <div class="letter" id="letter">
+          <div class="letter-content" id="letterContent">
+            <p class="letter-line">Min råtta 🐭🐀</p>
+            <p class="letter-line">Hoppas din dag har varit riktigt bra,🌺</p>
+            <p class="letter-line">Jag har tänkt lite på dig, inte för att jag är besatt… bara lite...⁉️</p>
+            <p class="letter-line">Ditt skratt och leende får mig att smälta🌷</p>
+            <p class="letter-line">Ännu igen tack för en supermysig dejt.</p>
+            <p class="letter-line">Jag ser fram emot att ses igen (och kanske sno en till kram?).</p>
+            <p class="letter-line">Och om du läser ända hit… du är bäst. 💕</p>
+            <p class="letter-line signature">Din åsna 🐋</p>
+            <p class="letter-line">p.s jag suger på skriva... </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="instructions" id="instructions">Klicka på kuvertet för att öppna brevet</p>
+  </div>
+
+  <script>
+    const envelope = document.getElementById('envelope');
+    const letter = document.getElementById('letter');
+    const letterContent = document.getElementById('letterContent');
+    const lines = document.querySelectorAll('.letter-line');
+    const container = document.querySelector('.container');
+    const instructions = document.getElementById('instructions');
+
+    // Sparkles
+    for (let i = 0; i < 40; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      sparkle.style.left = `${Math.random() * 100}vw`;
+      sparkle.style.top = `${Math.random() * 100}vh`;
+      sparkle.style.width = sparkle.style.height = `${Math.random() * 4 + 2}px`;
+      sparkle.style.animationDelay = `${Math.random() * 4}s`;
+      document.body.appendChild(sparkle);
+    }
+
+    // Add subtle movement to envelope on mouse move
+    document.addEventListener('mousemove', function(e) {
+      if (!envelope.classList.contains('open')) {
+        const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+        const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+        envelope.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+      }
+    });
+
+    envelope.addEventListener('click', function () {
+      this.classList.add('open');
+      this.style.transform = '';
+      setTimeout(() => {
+        letterContent.classList.add('show');
+        animateLines();
+      }, 700);
+      this.style.pointerEvents = 'none';
+      instructions.style.display = 'none';
+      
+      // Create an initial burst of hearts and flowers
+      createHearts(5);
+      createFlowers(5);
+    });
+
+    function animateLines() {
+      lines.forEach((line, index) => {
+        setTimeout(() => {
+          line.classList.add('visible');
+          if (index % 2 === 0) {
+            createHearts(3);
+          } else {
+            createFlowers(3);
+          }
+        }, index * 600);
+      });
+    }
+
+    function createHearts(count) {
+      const heartSymbols = ['❤️', '💖', '💕', '💗', '💓'];
+      for (let i = 0; i < count; i++) {
+        const heart = document.createElement('div');
+        heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+        heart.classList.add('heart');
+        heart.style.left = `${Math.random() * 80 + 10}%`;
+        heart.style.top = `${Math.random() * 60 + 20}%`;
+        heart.style.animationDelay = `${Math.random() * 2}s`;
+        heart.style.transform = `scale(${Math.random() * 0.5 + 0.8})`;
+        container.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+      }
+    }
+
+    function createFlowers(count) {
+      const flowers = ['🌸', '🌹', '🌺', '🌻', '🌼', '🌷', '🌿', '🍀'];
+      for (let i = 0; i < count; i++) {
+        const flower = document.createElement('div');
+        flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+        flower.classList.add('flower');
+        flower.style.left = `${Math.random() * 80 + 10}%`;
+        flower.style.top = `${Math.random() * 60 + 20}%`;
+        flower.style.animationDelay = `${Math.random() * 0.7}s`;
+        flower.style.transform = `scale(${Math.random() * 0.4 + 0.8})`;
+        container.appendChild(flower);
+        setTimeout(() => flower.remove(), 3000);
+      }
+    }
+  </script>
+</body>
+</html>
