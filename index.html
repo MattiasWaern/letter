@@ -452,8 +452,8 @@
           <div class="letter-content" id="letterContent">
             <p class="letter-line">Hej Adrieli 🌸💕</p>
             <p class="letter-line">Jag hoppas att din dag varit riktigt fin och att du mår bra! ❤️🌺</p>
-            <p class="letter-line">Jag har tänkt lite…  jag känner mig lite som en förvirrad goose just nu. Det känns som att du glider bort lite, och jag vet inte riktigt vad det betyder.</p>
-            <p class="letter-line">Jag kanske inbillar mig. Du kanske är super duper upptagen. Eller så har du faktiskt tagit ett steg tillbaka.</p>
+            <p class="letter-line">Jag har tänkt lite…  och jag känner mig lite som en förvirrad goose just nu. Det känns som att du glider bort lite, och jag vet inte riktigt vad det betyder.</p>
+            <p class="letter-line">Jag kanske inbillar mig. Du kanske är super duper upptagen, jag kanske har gjort något fel. Eller så har du faktiskt tagit ett steg tillbaka.</p>
             <p class="letter-line">Jag vill inte misstolka något</p>
             <p class="letter-line">Så jag vill bara fråga, på ett ärligt sätt — känner du fortfarande att det finns en framtid mellan oss?</p>
             <p class="letter-line">Oavsett vad, så vill jag att du ska veta att jag bryr mig om dig, och jag finns här om du vill prata eller behöver mig. 💕</p>
@@ -475,7 +475,7 @@
     const container = document.querySelector('.container');
     const instructions = document.getElementById('instructions');
 
-    // Sparkles
+    // sparkles
     for (let i = 0; i < 40; i++) {
       const sparkle = document.createElement('div');
       sparkle.classList.add('sparkle');
@@ -486,7 +486,7 @@
       document.body.appendChild(sparkle);
     }
 
-    // Add subtle movement to envelope on mouse move
+    // add subtle movement to envelope on mouse move
     document.addEventListener('mousemove', function(e) {
       if (!envelope.classList.contains('open')) {
         const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
@@ -505,7 +505,7 @@
       this.style.pointerEvents = 'none';
       instructions.style.display = 'none';
       
-      // Create an initial burst of hearts and flowers
+      // create an initial burst of hearts and flowers
       createHearts(5);
       createFlowers(5);
     });
