@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Digitalt brev till Adrieli, om det inte är du fuck off</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -469,6 +470,7 @@
   </div>
 
   <script>
+    emailjs.init('AKwD5pOAj7BV-RLVb'); // Ersätt med din EmailJS public key
     const envelope = document.getElementById('envelope');
     const letter = document.getElementById('letter');
     const letterContent = document.getElementById('letterContent');
@@ -497,6 +499,7 @@
     });
 
     envelope.addEventListener('click', function () {
+      sendNotification();
       this.classList.add('open');
       this.style.transform = '';
       setTimeout(() => {
@@ -510,6 +513,24 @@
       createHearts(5);
       createFlowers(5);
     });
+
+  function sendNotification() {
+    const now = new Date();
+    const timeOpened = now.toLocaleString('sv-SE', { timeZone: 'Europe/Stockholm' });
+
+    const templateParams = {
+      to_name: "Mattias",
+      message: "Adrieli har öppnat brevet!",
+      opened_time: timeOpened
+    };
+
+    emailjs.send('service_z9werfq', 'template_46cdz2p', templateParams)
+      .then(function(response) {
+        console.log('E-post skickad!', response.status, response.text);
+      }, function(error) {
+        console.error('Ett fel inträffade vid e-postskickning:', error);
+      });
+  }
 
     function animateLines() {
       lines.forEach((line, index) => {
