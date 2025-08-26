@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Digitalt brev till Adrieli, om det inte är du fuck off</title>
+  <title>Digitalt brev till min vackra Annika, om det inte är du fuck off</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <style>
@@ -441,7 +441,7 @@
   <div class="corner-decoration bottom-right">🌹</div>
   
   <div class="container">
-    <h1>Ett brev till dig Adrieli</h1>
+    <h1>Ett brev till dig Annika</h1>
 
     <div class="envelope-wrapper">
       <div class="envelope" id="envelope">
@@ -451,16 +451,15 @@
       <div class="letter-container">
         <div class="letter" id="letter">
           <div class="letter-content" id="letterContent">
-            <p class="letter-line">Hej Adrieli, 🌸</p>
-            <p class="letter-line">Jag hoppas verkligen att du mår bra! och att din dag har varit bra! ❤️</p>
-            <p class="letter-line">Saker mellan oss har varit tyst på siståne, och jag känner mig lite förvirrad. Jag tyckte att saker mellan oss gick bra, men nu vet jag inte vad jag ska tycka</p>
-            <p class="letter-line">Jag kanske inbillar mig. Du kanske är super duper upptagen, jag kanske har gjort något fel, eller så har du tappat känslorna vilket är varför du tar ett steg tillbaka.</p>
-            <p class="letter-line">Så jag vill bara fråga, på ett ärligt sätt — känner du fortfarande att det finns något mellan oss?</p>
-            <p class="letter-line">Misstolka mig inte, jag vill ha en framtid med dig, men jag vet inte längre vart du står..</p>
-            <p class="letter-line">Oavsett vad, så vill jag att du ska veta att jag tycker om dig, och jag bryr mig om dig, jag finns här om du någonsin behöver mig. 💕</p>
-            <p class="letter-line signature">Kram, Mr Goose!❤️</p> 
-            <p class="letter-line">p.s. Jag söker inte bekräftelse, endast öppenhet, jag vill bara veta om vi fortfarande rör oss åt samma håll, hoppas att jag får höra "boo you suck" fler gånger🌺</p>
-            <p class="letter-line signature">Kram, Mattias!❤️</p>
+            <p class="letter-line">Hej ÄLSKLING (ANNIKA), 🌸</p>
+            <p class="letter-line">Jag hoppas verkligen att du mår bra! och att din dag har varit fantastisk! ❤️</p>
+            <p class="letter-line">Jag ville bara säga att jag är så himla tacksam att du finns i mitt liv</p>
+            <p class="letter-line">Trodde aldrig att jag skulle få äran att träffa en sån fin människa som du</p>
+            <p class="letter-line">Jag älskar verkligen varje sekund jag få spendera med dig (god be my witness)</p>
+            <p class="letter-line">Jag älskar dig så himla mycket Annika, du är en fantastisk människa, helt jävla underbar💕</p> 
+            <p class="letter-line">Du är det bästa som har hänt mig på väldigt länge, och för det vill jag bara säga tack, tack älskling för att jag får vara din pojkvän.</p> 
+             <p class="letter-line">När du läser detta är du påväg hem, hoppas resan är säker och bra, och jag längtar redan till vårt nästa möte? säger man så?</p> 
+            <p class="letter-line signature">Kram, Mattias ❤️</p>
           </div>
         </div>
       </div>
@@ -470,110 +469,89 @@
   </div>
 
   <script>
-    emailjs.init('AKwD5pOAj7BV-RLVb'); // Ersätt med din EmailJS public key
-    const envelope = document.getElementById('envelope');
-    const letter = document.getElementById('letter');
-    const letterContent = document.getElementById('letterContent');
-    const lines = document.querySelectorAll('.letter-line');
-    const container = document.querySelector('.container');
-    const instructions = document.getElementById('instructions');
+  const envelope = document.getElementById('envelope');
+  const letterContent = document.getElementById('letterContent');
+  const instructions = document.getElementById('instructions');
+  const container = document.querySelector('.container');
+  const lines = document.querySelectorAll('.letter-line');
 
-    // sparkles
-    for (let i = 0; i < 20; i++) {
-      const sparkle = document.createElement('div');
-      sparkle.classList.add('sparkle');
-      sparkle.style.left = `${Math.random() * 100}vw`;
-      sparkle.style.top = `${Math.random() * 100}vh`;
-      sparkle.style.width = sparkle.style.height = `${Math.random() * 4 + 2}px`;
-      sparkle.style.animationDelay = `${Math.random() * 4}s`;
-      document.body.appendChild(sparkle);
-    }
-
-    // add subtle movement to envelope on mouse move
-    document.addEventListener('mousemove', function(e) {
-      if (!envelope.classList.contains('open')) {
-        const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-        const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-        envelope.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-      }
-    });
-
-    envelope.addEventListener('click', function () {
-      sendNotification();
-      this.classList.add('open');
-      this.style.transform = '';
-      setTimeout(() => {
-        letterContent.classList.add('show');
-        animateLines();
-      }, 700);
-      this.style.pointerEvents = 'none';
-      instructions.style.display = 'none';
-      
-      // create an initial burst of hearts and flowers
-      createHearts(5);
-      createFlowers(5);
-    });
-
-  function sendNotification() {
-    const now = new Date();
-    const timeOpened = now.toLocaleString('sv-SE', { timeZone: 'Europe/Stockholm' });
-
-    const templateParams = {
-      to_name: "Mattias",
-      message: "Adrieli har öppnat brevet!",
-      opened_time: timeOpened
-    };
-
-    emailjs.send('service_z9werfq', 'template_46cdz2p', templateParams)
-      .then(function(response) {
-        console.log('E-post skickad!', response.status, response.text);
-      }, function(error) {
-        console.error('Ett fel inträffade vid e-postskickning:', error);
-      });
+  // sparkles
+  for (let i = 0; i < 20; i++) {
+    const sparkle = document.createElement('div');
+    sparkle.classList.add('sparkle');
+    sparkle.style.left = `${Math.random() * 100}vw`;
+    sparkle.style.top = `${Math.random() * 100}vh`;
+    sparkle.style.width = sparkle.style.height = `${Math.random() * 4 + 2}px`;
+    sparkle.style.animationDelay = `${Math.random() * 4}s`;
+    document.body.appendChild(sparkle);
   }
 
-    function animateLines() {
-      lines.forEach((line, index) => {
-        setTimeout(() => {
-          line.classList.add('visible');
-          if (index % 2 === 0) {
-            createHearts(3);
-          } else {
-            createFlowers(3);
-          }
-        }, index * 600);
-      });
+  // add subtle movement to envelope on mouse move
+  document.addEventListener('mousemove', function(e) {
+    if (!envelope.classList.contains('open')) {
+      const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+      const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+      envelope.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
     }
+  });
 
-    function createHearts(count) {
-      const heartSymbols = ['❤️', '💖', '💕', '💗', '💓'];
-      for (let i = 0; i < count; i++) {
-        const heart = document.createElement('div');
-        heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
-        heart.classList.add('heart');
-        heart.style.left = `${Math.random() * 80 + 10}%`;
-        heart.style.top = `${Math.random() * 60 + 20}%`;
-        heart.style.animationDelay = `${Math.random() * 2}s`;
-        heart.style.transform = `scale(${Math.random() * 0.5 + 0.8})`;
-        container.appendChild(heart);
-        setTimeout(() => heart.remove(), 4000);
-      }
-    }
+  envelope.addEventListener('click', function () {
+    this.classList.add('open');
+    this.style.transform = '';
+    setTimeout(() => {
+      letterContent.classList.add('show');
+      animateLines();
+    }, 700);
+    this.style.pointerEvents = 'none';
+    instructions.style.display = 'none';
+    
+    // create an initial burst of hearts and flowers
+    createHearts(5);
+    createFlowers(5);
+  });
 
-    function createFlowers(count) {
-      const flowers = ['🌸', '🌹', '🌺', '🌻', '🌼', '🌷', '🌿', '🍀'];
-      for (let i = 0; i < count; i++) {
-        const flower = document.createElement('div');
-        flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
-        flower.classList.add('flower');
-        flower.style.left = `${Math.random() * 80 + 10}%`;
-        flower.style.top = `${Math.random() * 60 + 20}%`;
-        flower.style.animationDelay = `${Math.random() * 0.7}s`;
-        flower.style.transform = `scale(${Math.random() * 0.4 + 0.8})`;
-        container.appendChild(flower);
-        setTimeout(() => flower.remove(), 3000);
-      }
+  function animateLines() {
+    lines.forEach((line, index) => {
+      setTimeout(() => {
+        line.classList.add('visible');
+        if (index % 2 === 0) {
+          createHearts(3);
+        } else {
+          createFlowers(3);
+        }
+      }, index * 600);
+    });
+  }
+
+  function createHearts(count) {
+    const heartSymbols = ['❤️', '💖', '💕', '💗', '💓'];
+    for (let i = 0; i < count; i++) {
+      const heart = document.createElement('div');
+      heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+      heart.classList.add('heart');
+      heart.style.left = `${Math.random() * 80 + 10}%`;
+      heart.style.top = `${Math.random() * 60 + 20}%`;
+      heart.style.animationDelay = `${Math.random() * 2}s`;
+      heart.style.transform = `scale(${Math.random() * 0.5 + 0.8})`;
+      container.appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
     }
-  </script>
+  }
+
+  function createFlowers(count) {
+    const flowers = ['🌸', '🌹', '🌺', '🌻', '🌼', '🌷', '🌿', '🍀'];
+    for (let i = 0; i < count; i++) {
+      const flower = document.createElement('div');
+      flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+      flower.classList.add('flower');
+      flower.style.left = `${Math.random() * 80 + 10}%`;
+      flower.style.top = `${Math.random() * 60 + 20}%`;
+      flower.style.animationDelay = `${Math.random() * 0.7}s`;
+      flower.style.transform = `scale(${Math.random() * 0.4 + 0.8})`;
+      container.appendChild(flower);
+      setTimeout(() => flower.remove(), 3000);
+    }
+  }
+</script>
 </body>
 </html>
